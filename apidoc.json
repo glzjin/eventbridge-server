@@ -1,0 +1,13 @@
+{
+  "name": "eventbridge",
+  "version": "1.0.0",
+  "description": "项目API文档",
+  "title": "EventBridge",
+  "url" : "",
+  "sampleUrl" : ".",
+  "forceLanguage":"zh-cn",
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}
