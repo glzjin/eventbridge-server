@@ -4,23 +4,16 @@ import in.zhaoj.eventbridge.pojo.Event;
 import in.zhaoj.eventbridge.pojo.EventsFlow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 /**
  * @author: jinzhao
- * @date:2018/8/12
+ * @date:2018/8/14
  * @description:
  */
-@Controller
-public class EventService {
+public interface EventService {
 
-    @Autowired
-    private EventsFlow eventsFlow;
+    public void producerProductEvent(String consumer_uuid, Event event);
 
-    public void producerProductEvent(Event event) {
-        this.eventsFlow.productEvent(event);
-    }
-
-    public Event consumerConsumeEvent() {
-        return this.eventsFlow.consumeEvent();
-    }
+    public Event consumerConsumeEvent(String consumer_uuid);
 }

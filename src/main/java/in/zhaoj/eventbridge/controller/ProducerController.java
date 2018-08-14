@@ -4,10 +4,7 @@ import in.zhaoj.eventbridge.pojo.Event;
 import in.zhaoj.eventbridge.pojo.Response;
 import in.zhaoj.eventbridge.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @apiDefine productGroup 生产者相关
@@ -26,14 +23,15 @@ public class ProducerController {
     private EventService eventService;
 
     /**
-    * @api {post} /producer/event 事件生产
+    * @api {post} /producer/event?consumer_uuid=:consumer_uuid 事件生产
     * @apiName ProducerEventProduct
     * @apiGroup productGroup
-    * @apiVersion 1.0.0
+    * @apiVersion 2.0.0
     * @apiDescription 生产一个事件
     *
     * @apiUse header
     *
+    * @apiParam {string} consumer_uuid 消费者 UUID
     * @apiParam {int} event_id 事件 ID
     * @apiParamExample {json} 请求示例
     * {
@@ -48,8 +46,8 @@ public class ProducerController {
     *
     */
     @RequestMapping(value = "/event", method = RequestMethod.POST)
-    public Response productEvent(@RequestBody Event event) {
-        this.eventService.producerProductEvent(event);
+    public Response productEvent(@RequestParam String consumer_uuid, @RequestBody Event event) {
+        this.eventService.producerProductEvent(consumer_uuid, event);
 
         Response response = new Response(Response.CODE_SUCCESS);
         return response;
