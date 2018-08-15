@@ -13,7 +13,9 @@ import java.util.HashMap;
 public class Response {
     public final static int CODE_SUCCESS = 100;
     public final static int CODE_SUCCESS_BUT_NULL = 101;
+    public final static int CODE_SUCCESS_PONG = 102;
     public final static int CODE_KEY_ERROR = 201;
+    public final static int CODE_NEW_EVENT = 300;
 
     private int code;
 

@@ -2,7 +2,6 @@ package in.zhaoj.eventbridge.controller;
 
 import in.zhaoj.eventbridge.pojo.Response;
 import in.zhaoj.eventbridge.util.UUIDUtil;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

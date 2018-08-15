@@ -40,9 +40,9 @@ public class ConsumerController {
     * {
     *      code: 100,
     *         "data": {
-    *         "event": {
-    *             "event_id": 1
-    *         }
+    *           "event": {
+    *               "event_id": 1
+    *           }
     *     }
     * }
     *

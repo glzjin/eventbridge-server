@@ -2,8 +2,6 @@ package in.zhaoj.eventbridge.pojo;
 
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
