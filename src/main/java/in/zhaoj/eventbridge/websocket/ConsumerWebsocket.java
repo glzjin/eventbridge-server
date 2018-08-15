@@ -62,8 +62,17 @@ public class ConsumerWebsocket extends TextWebSocketHandler
      * @apiVersion 2.0.0
      * @apiDescription Websocket  接口
      *
-     * @apiParam {json} action 动作, reg or ping
+     * @apiParam {json} action 动作, reg
      * @apiParam {json} consumer_uuid 消费者 UUID
+     * @apiParam {json} key 消费者 Key
+     *
+     * @apiParamExample {json} 请求示例
+     * {
+     *      "action": "reg",
+     *      "consumer_uuid": "test",
+     *      "key": "your_key"
+     * }
+     *
      * @apiSuccess (请求成功) {json} code 结果码
      * @apiSuccess (请求成功) {json} data 数据
      * @apiSuccessExample 请求成功
@@ -86,9 +95,10 @@ public class ConsumerWebsocket extends TextWebSocketHandler
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception
     {
+        String message_text = message.getPayload();
         HashMap<String, Object> json = null;
         try {
-            json = JSONUtil.decode(message.getPayload());
+            json = JSONUtil.decode(message_text);
 
             if(json.get("action").equals("reg")) {
                 //验证 Key
@@ -107,10 +117,6 @@ public class ConsumerWebsocket extends TextWebSocketHandler
                 while((event = this.eventsFlow.consumeEvent(consumer_uuid)) != null) {
                     this.sendEvent(consumer_uuid, event);
                 }
-            }
-
-            if(json.get("action").equals("ping")) {
-                this.sendMessage(JSONUtil.encode(new Response(Response.CODE_SUCCESS_PONG)));
             }
         } catch (IOException e) {
             e.printStackTrace();
