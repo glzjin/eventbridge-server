@@ -1,7 +1,8 @@
 package in.zhaoj.eventbridge.aop;
 
+import in.zhaoj.eventbridge.pojo.ConsumerSocketSessionWarehouse;
 import in.zhaoj.eventbridge.pojo.EventsFlow;
-import in.zhaoj.eventbridge.websocket.ConsumerWebsocket;
+import in.zhaoj.eventbridge.util.ConsumerWebSocketSessionUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,6 +10,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 
@@ -23,7 +25,10 @@ import java.io.IOException;
 public class EventAspect {
 
     @Autowired
-    private ConsumerWebsocket consumerWebsocket;
+    private ConsumerSocketSessionWarehouse consumerSocketSessionWarehouse;
+
+    @Autowired
+    private ConsumerWebSocketSessionUtil consumerWebSocketSessionUtil;
 
     @Autowired
     private EventsFlow eventsFlow;
@@ -36,10 +41,11 @@ public class EventAspect {
         Object[] obj = joinPoint.getArgs();
         for (Object argItem : obj) {
             if (argItem instanceof String) {
-                String consumer_uuid = (String) argItem;
-                if(this.consumerWebsocket.isConsumerOnilne(consumer_uuid)) {
+                String consumerUUID = (String) argItem;
+                WebSocketSession webSocket = this.consumerSocketSessionWarehouse.getWebSocketByUUID(consumerUUID);
+                if(webSocket != null) {
                     //传送事件
-                    this.consumerWebsocket.sendEvent(consumer_uuid, this.eventsFlow.consumeEvent(consumer_uuid));
+                    this.consumerWebSocketSessionUtil.sendEvent(webSocket, this.eventsFlow.consumeEvent(consumerUUID));
                 }
             }
         }

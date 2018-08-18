@@ -1,6 +1,6 @@
 package in.zhaoj.eventbridge.config;
 
-import in.zhaoj.eventbridge.websocket.ConsumerWebsocket;
+import in.zhaoj.eventbridge.websocket.ConsumerWebsocketHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -21,8 +21,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     }
 
     @Bean
-    public ConsumerWebsocket consumerWebsocket() {
-        return new ConsumerWebsocket();
+    public ConsumerWebsocketHandler consumerWebsocket() {
+        return new ConsumerWebsocketHandler();
     }
 
 }
